@@ -1,0 +1,32 @@
+[package]
+name = "libdawg"
+version = "1.0.0"
+authors = ["Marcus Svensson <marcus@lincopia.com>"]
+edition = "2021"
+description = "A fast, memory-efficient DAWG (Directed Acyclic Word Graph) for word validation and prefix queries"
+license = "MIT"
+repository = "https://github.com/mrcz/libdawg"
+keywords = ["dawg", "wordlist", "dictionary", "trie", "automaton"]
+categories = ["data-structures", "algorithms", "text-processing"]
+readme = "README.md"
+
+[dependencies]
+hashbrown = "0.15"
+mark_last = "0.9.2"
+smallvec = { version = "1.15", features = [
+    "union",
+    "const_generics",
+    "const_new",
+] }
+typed-arena = { version = "2.0.1", optional = true }
+
+[features]
+default = ["arena"]
+arena = ["dep:typed-arena"]
+
+[[example]]
+name = "wordlist"
+required-features = ["arena"]
+
+[dev-dependencies]
+itertools = "0.14"
