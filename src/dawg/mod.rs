@@ -2,8 +2,8 @@
 pub mod builder;
 /// Trait for types that can serve as DAWG edge labels.
 pub mod char_trait;
-/// DAWG node and children module containing the core graph data structures.
-pub mod children;
+/// Core graph node and edge data structures.
+pub mod node;
 /// Internal chunked arena allocator.
 pub(crate) mod node_arena;
 /// Owned DAWG that manages its own arena internally.
@@ -11,7 +11,7 @@ pub mod owned;
 
 pub use builder::IntoWord;
 pub use char_trait::DawgChar;
-pub use children::DawgNode;
+pub use node::DawgNode;
 
 /// Re-export `typed_arena::Arena` for use with the arena-based API.
 #[cfg(feature = "arena")]

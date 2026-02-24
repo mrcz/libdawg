@@ -12,7 +12,7 @@ use std::io::{BufRead, BufReader};
 use typed_arena::Arena;
 
 use super::char_trait::DawgChar;
-use super::children::DawgNode;
+use super::node::DawgNode;
 
 /// Trait for types that can be used as a word when building a DAWG.
 ///

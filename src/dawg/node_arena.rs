@@ -8,7 +8,7 @@ use std::mem::MaybeUninit;
 
 use super::builder::NodeAlloc;
 use super::char_trait::DawgChar;
-use super::children::DawgNode;
+use super::node::DawgNode;
 
 const CHUNK_CAP: usize = 64;
 

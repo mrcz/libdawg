@@ -8,7 +8,7 @@ use smallvec::SmallVec;
 
 use super::builder::{is_comment, BuilderCore, BuilderError, IntoWord};
 use super::char_trait::DawgChar;
-use super::children::DawgNode;
+use super::node::DawgNode;
 use super::node_arena::NodeArena;
 
 /// Internal state for DAWG mutation operations.
