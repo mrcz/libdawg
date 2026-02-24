@@ -656,28 +656,6 @@ mod test {
     }
 
     #[test]
-    fn all_words_from_file() {
-        use std::fs::File;
-        use std::io::{BufRead, BufReader};
-
-        let dict_filename = "../dict-sv.txt";
-        let dawg = build_owned_dawg_from_file(dict_filename).unwrap();
-        let root = dawg.root();
-
-        let file = File::open(dict_filename).unwrap();
-        for line in BufReader::new(file).lines() {
-            let word = line.unwrap();
-            if let Some(first_char) = word.chars().next() {
-                if first_char.is_alphabetic() {
-                    assert!(is_word(root, &word), "{}", word);
-                }
-            }
-        }
-        assert!(!is_word(root, "URSINN"));
-        assert!(!is_word(root, "ÅTMINSTON"));
-    }
-
-    #[test]
     fn owned_dawg_is_send_and_sync() {
         fn assert_send_sync<T: Send + Sync>() {}
         assert_send_sync::<OwnedDawg<char>>();

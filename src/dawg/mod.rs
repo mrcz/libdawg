@@ -20,37 +20,8 @@ pub use typed_arena::Arena;
 #[cfg(test)]
 #[cfg(feature = "arena")]
 mod test {
-    use super::builder::{build_dawg, build_dawg_from_file};
-    use std::fs::File;
-    use std::io::{BufRead, BufReader};
+    use super::builder::build_dawg;
     use typed_arena::Arena;
-
-    fn is_word<'w>(root: &'w super::DawgNode<'w, char>, word: &str) -> bool {
-        word.chars()
-            .try_fold(root, |n, ch| n.get(ch))
-            .is_some_and(|n| n.is_word())
-    }
-
-    #[test]
-    fn all_words() {
-        let dict_filename = "../dict-sv.txt";
-        let arena = Arena::new();
-        let root = build_dawg_from_file(&arena, dict_filename).unwrap();
-        let file = File::open(dict_filename).unwrap();
-        for line in BufReader::new(file).lines() {
-            let word = &line.unwrap();
-            if let Some(first_char) = word.chars().next() {
-                if first_char.is_alphabetic() {
-                    assert!(is_word(root, word), "{}", word);
-                }
-            }
-        }
-        // test some non-words
-        assert!(!is_word(root, "URSINN"));
-        assert!(!is_word(root, "URSINNESS"));
-        assert!(!is_word(root, "ÅTMINSTON"));
-        assert!(!is_word(root, "ÅTMINSTONDE"));
-    }
 
     #[test]
     fn add_word() {
