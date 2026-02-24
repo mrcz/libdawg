@@ -63,12 +63,26 @@ The simplest API uses `OwnedDawg`, which manages allocation internally:
 ```rust
 use libdawg::dawg::owned::build_owned_dawg;
 
-let dawg = build_owned_dawg(["BAKE", "CAKE", "FAKE", "LAKE", "MAKE"]).unwrap();
-let root = dawg.root();
+fn is_word(dawg: &OwnedDawg<char>, word: &str) -> bool {
+    // Start at the root of the graph
+    let mut node = dawg.root();
 
-let is_word = |w: &str| w.chars().try_fold(root, |n, ch| n.get(ch)).is_some_and(|n| n.is_word());
-assert!(is_word("CAKE"));
-assert!(!is_word("AKE"));
+    for ch in word.chars() {
+        match node.get(ch) {
+            // Follow the edge labeled `ch`
+            Some(child) => node = child,
+            // No edge for this character — word is not in the dictionary
+            None => return false,
+        }
+    }
+
+    // All characters matched; check if this node is a word endpoint
+    node.is_word()
+}
+
+let dawg = build_owned_dawg(["BAKE", "CAKE", "FAKE", "LAKE", "MAKE"]).unwrap();
+assert!(is_word(&dawg, "CAKE"));
+assert!(!is_word(&dawg, "AKE"));
 ```
 
 ### Adding and removing words
